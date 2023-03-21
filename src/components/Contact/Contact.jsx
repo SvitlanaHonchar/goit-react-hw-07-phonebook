@@ -1,18 +1,18 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/contactSlice';
+import { deleteContacts } from 'redux/contactSlice';
 
 const Contact = ({ contact }) => {
   const dispatch = useDispatch();
+
+  const onRemoveClick = () => {
+    dispatch(deleteContacts(contact.id));
+  };
+
   return (
     <>
       👨🏻‍🦱 {contact.name}: {contact.phone}
-      <button
-        onClick={() => {
-          dispatch(deleteContact(contact.id));
-        }}
-        type="button"
-      >
+      <button onClick={onRemoveClick} type="button">
         Remove contact
       </button>
     </>

@@ -1,16 +1,15 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { StyledForm, StyledBtn } from './PhoneBook.styled';
-import { addContact, fetchContacts } from 'redux/contactSlice';
+import { addContacts, fetchContacts } from 'redux/contactSlice';
 import { useDispatch } from 'react-redux';
 import { getContacts } from 'redux/selectors';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
-const Phonebook = ({ onRemoveContact, onAddContact }) => {
+const Phonebook = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
 
@@ -23,8 +22,8 @@ const Phonebook = ({ onRemoveContact, onAddContact }) => {
       case 'name':
         setName(e.target.value);
         break;
-      case 'number':
-        setNumber(e.target.value);
+      case 'phone':
+        setPhone(e.target.value);
         break;
       default:
         console.log('not correct option');
@@ -37,7 +36,7 @@ const Phonebook = ({ onRemoveContact, onAddContact }) => {
 
     const contact = {
       name,
-      number,
+      phone,
       id: nanoid(),
     };
 
@@ -50,9 +49,10 @@ const Phonebook = ({ onRemoveContact, onAddContact }) => {
       return;
     }
 
-    dispatch(addContact(contact));
+    // dispatch(addContact(contact));
+    dispatch(addContacts(contact));
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   return (
@@ -75,11 +75,11 @@ const Phonebook = ({ onRemoveContact, onAddContact }) => {
           <span>Number</span>
           <input
             type="tel"
-            name="number"
+            name="phone"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             placeholder="number"
-            value={number}
+            value={phone}
             onChange={handleInput}
             required
           />
@@ -91,8 +91,3 @@ const Phonebook = ({ onRemoveContact, onAddContact }) => {
 };
 
 export default Phonebook;
-
-Phonebook.propTypes = {
-  onAddContact: PropTypes.func,
-  onRemoveContact: PropTypes.func,
-};
