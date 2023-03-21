@@ -1,15 +1,21 @@
 import Contact from 'components/Contact/Contact';
 import PropTypes from 'prop-types';
 import { StyledLi, StyledOl } from './ContactList.styled';
-import { getContacts, getFilter } from 'redux/selectors';
+import {
+  getContacts,
+  // getFilter,
+  getFilterSelector,
+} from 'redux/selectors';
 import { useSelector } from 'react-redux';
 
 const ContactList = () => {
   const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter);
-  const visibleContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
+  // const filter = useSelector(getFilter);
+  // const visibleContacts = contacts.filter(contact =>
+  //   contact.name.toLowerCase().includes(filter.toLowerCase())
+  // );
+  const visibleContacts = useSelector(getFilterSelector(contacts));
+
   return (
     <div>
       <StyledOl>
