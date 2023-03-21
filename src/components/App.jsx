@@ -1,12 +1,13 @@
+import { useSelector } from 'react-redux';
+import { getContacts, getLoadingStatus } from 'redux/selectors';
 import ContactList from './ContactList/ContactList';
 import Phonebook from './Phonebook/Phonebook';
 import Filter from './Filter/Filter';
-import { getContacts } from 'redux/selectors';
-import { useSelector } from 'react-redux';
+import Loader from './Loader/Loader';
 
 const App = () => {
   const contacts = useSelector(getContacts);
-
+  const isLoading = useSelector(getLoadingStatus);
   return (
     <div
       style={{
@@ -23,6 +24,7 @@ const App = () => {
       <Phonebook />
       <Filter />
       <h2>Contacts</h2>
+      {isLoading && <Loader />}
       {contacts.length === 0 ? <i>-- no contacts here --</i> : <ContactList />}
     </div>
   );

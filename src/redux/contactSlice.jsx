@@ -48,6 +48,7 @@ const contactsSlice = createSlice({
   initialState: {
     items: [],
     error: null,
+    isLoading: false,
   },
   // Об'єкт редюсерів
   reducers: {
@@ -67,14 +68,18 @@ const contactsSlice = createSlice({
       // ----fetch contacts----
       .addCase(fetchContacts.pending, state => {
         state.error = null;
+        state.isLoading = true;
       })
       .addCase(fetchContacts.fulfilled, (state, { payload }) => {
         state.error = null;
+        state.isLoading = false;
+
         // console.log('fetchContacts', payload);
         state.items = [...payload];
       })
       .addCase(fetchContacts.rejected, (state, { payload }) => {
         state.error = payload;
+        state.isLoading = false;
       })
       // ----post contacts----
       .addCase(addContacts.pending, state => {
